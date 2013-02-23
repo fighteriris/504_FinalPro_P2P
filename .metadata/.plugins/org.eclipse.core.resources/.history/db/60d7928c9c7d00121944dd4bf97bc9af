@@ -159,8 +159,6 @@ public class Crawler {
 	  //保存到数据库
 	    public void WritetoSql(String sUrL, StringBuffer sb){
 	    	String myurl = sUrL;
-	    	if (!sUrL.contains("bu.edu"))
-	    	 return;
 	    	String data = sb.toString();
 	    	String driver = "com.mysql.jdbc.Driver";
 	    	String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
@@ -185,7 +183,7 @@ public class Crawler {
 	    		ps.setString(1,myurl);
                 ps.setString(2,data);
                 ps.setInt(3,3);
-                //ps.setDate(4, new Date(time));
+                ps.setDate(4, new Date(time));
                 //ps.setInt(3,4);
                 //ps.setDate(4,date);
                 //statement.executeUpdate(sql);

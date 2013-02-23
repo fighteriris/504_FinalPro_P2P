@@ -9,14 +9,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import sun.misc.BASE64Encoder;
 import sun.misc.BASE64Decoder;
-import java.sql.*;
 
 public class Crawler {
 
@@ -130,7 +128,6 @@ public class Crawler {
 	                    parseContext(sb.toString(),d+1);  
 	                }
 	                WriteWeb(sUrl,sb);
-	                WritetoSql(sUrl,sb);
 //	              System.out.println(sb.toString());  
 	  
 	              
@@ -156,54 +153,6 @@ public class Crawler {
 	    	return null; 
 	    	} 
 	    	}
-	  //保存到数据库
-	    public void WritetoSql(String sUrL, StringBuffer sb){
-	    	String myurl = sUrL;
-	    	if (!sUrL.contains("bu.edu"))
-	    	 return;
-	    	String data = sb.toString();
-	    	String driver = "com.mysql.jdbc.Driver";
-	    	String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
-	    	String user = "root";
-	    	String password = "000000";
-	    	long time = System.currentTimeMillis();
-	    	java.sql.Date date = new java.sql.Date(time);
-
-	    	try {
-
-	    		// 加载驱动程序
-	    		Class.forName(driver);
-	    		// 连续数据库
-	    		Connection conn = DriverManager.getConnection(sqlurl, user, password);
-	    		if(!conn.isClosed())
-	    		System.out.println("Succeeded connecting to the Database!");
-	    		// statement用来执行SQL语句
-	    		Statement statement = conn.createStatement();
-	    		// 要执行的SQL语句
-	    		String sql = "insert into webpage(PAGE_URL, PAGE_Content,PAGE_RANK) values(?,?,?)";
-	    		PreparedStatement ps=conn.prepareStatement(sql); 
-	    		ps.setString(1,myurl);
-                ps.setString(2,data);
-                ps.setInt(3,3);
-                //ps.setDate(4, new Date(time));
-                //ps.setInt(3,4);
-                //ps.setDate(4,date);
-                //statement.executeUpdate(sql);
-                int result=ps.executeUpdate();
-                if(result > 0)
-                	System.out.println("Update");
-                else
-                	System.out.println("Unable to update the database");
-                //ps.setString(4, user.getEmail());
-	    		}catch(ClassNotFoundException e) {   
-	    			System.out.println("Sorry,can`t find the Driver!");   
-	    			e.printStackTrace();   
-	    			} catch(SQLException e) {   
-	    			e.printStackTrace();   
-	    			} catch(Exception e) {   
-	    			e.printStackTrace();   
-	    			}   	    			   	    		
-	    }
 	    
 	  //保存html文件
 	    public void WriteWeb(String sUrL, StringBuffer sb){

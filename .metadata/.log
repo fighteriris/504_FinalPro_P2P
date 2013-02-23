@@ -118,3 +118,6 @@ java.io.IOException: Authorization exception retrieving nexus-maven-repository-i
 	at org.maven.ide.eclipse.internal.index.NexusIndexManager$1.run(NexusIndexManager.java:624)
 	at org.maven.ide.eclipse.internal.index.IndexUpdaterJob.run(IndexUpdaterJob.java:71)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.ui 4 4 2013-02-23 05:28:12.234
+!MESSAGE Part already exists in page layout: org.eclipse.debug.ui.ExpressionView.
