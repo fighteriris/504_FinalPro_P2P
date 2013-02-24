@@ -1,11 +1,8 @@
 package com.Crawler;
 
-import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import sun.misc.BASE64Encoder;
@@ -37,11 +32,10 @@ public class Crawler {
 	    int threadCount = 10;                                           //线程数量  
 	    int count = 0; //表示有多少个线程处于wait状态  
 	    public static final Object signal = new Object();   //线程间通信变量  
-	    public Hashtable webpage_hash = new Hashtable(); 
-	    
+	      
 	    public static void main(String[] args) {  
 	        final Crawler wc = new Crawler(); 
-	        
+	        Hashtable webpage_hash = new Hashtable(); 
 //	      wc.addUrl("http://www.126.com", 1);  
 	        wc.addUrl("http://www.bu.edu", 1);  
 	        long start= System.currentTimeMillis();  
@@ -53,12 +47,11 @@ public class Crawler {
 	                long end = System.currentTimeMillis();  
 	                System.out.println("总共爬了"+wc.allurlSet.size()+"个网页");  
 	                System.out.println("总共耗时"+(end-start)/1000+"秒");  
-	                wc.SaveHash();
 	                System.exit(1);  
 //	              break;  
 	            }  
 	              
-	        }
+	        }  
 	    }  
 	    private void begin() {  
 	        for(int i=0;i<threadCount;i++){  
@@ -138,9 +131,8 @@ public class Crawler {
 	                    //解析网页内容，从中提取链接  
 	                    parseContext(sb.toString(),d+1);  
 	                }
-	                //WriteWeb(sUrl,sb);
-	                //WritetoSql(sUrl,sb);
-	                WritetoHash(sUrl,sb);
+	                WriteWeb(sUrl,sb);
+	                WritetoSql(sUrl,sb);
 //	              System.out.println(sb.toString());  
 	  
 	              
@@ -168,22 +160,6 @@ public class Crawler {
 	    	}
 	  //保存到hashtable
 	    public void WritetoHash(String sUrl,StringBuffer sb){
-	    	String str; 
-	    	webpage_hash.put(sUrl, sb);	    
-	    	
-	    }
-	  //输出hashtable
-	    public  void SaveHash(){
-	    	FileOutputStream fos;
-			try {
-				fos = new FileOutputStream("tmp.xml");
-				XMLEncoder e = new XMLEncoder(fos);
-	    	e.writeObject(webpage_hash);
-	    	e.close();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 	    	
 	    }
 	  //保存到数据库

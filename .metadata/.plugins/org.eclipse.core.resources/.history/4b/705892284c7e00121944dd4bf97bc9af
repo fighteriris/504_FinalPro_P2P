@@ -4,7 +4,6 @@ import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,7 +37,6 @@ public class Crawler {
 	    int count = 0; //表示有多少个线程处于wait状态  
 	    public static final Object signal = new Object();   //线程间通信变量  
 	    public Hashtable webpage_hash = new Hashtable(); 
-	    
 	    public static void main(String[] args) {  
 	        final Crawler wc = new Crawler(); 
 	        
@@ -53,12 +51,11 @@ public class Crawler {
 	                long end = System.currentTimeMillis();  
 	                System.out.println("总共爬了"+wc.allurlSet.size()+"个网页");  
 	                System.out.println("总共耗时"+(end-start)/1000+"秒");  
-	                wc.SaveHash();
 	                System.exit(1);  
 //	              break;  
 	            }  
 	              
-	        }
+	        }  
 	    }  
 	    private void begin() {  
 	        for(int i=0;i<threadCount;i++){  
@@ -173,18 +170,11 @@ public class Crawler {
 	    	
 	    }
 	  //输出hashtable
-	    public  void SaveHash(){
-	    	FileOutputStream fos;
-			try {
-				fos = new FileOutputStream("tmp.xml");
-				XMLEncoder e = new XMLEncoder(fos);
+	    public void SaveHash(){
+	    	FileOutputStream fos = new FileOutputStream("tmp.xml");
+	    	XMLEncoder e = new XMLEncoder(fos);
 	    	e.writeObject(webpage_hash);
 	    	e.close();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	    	
 	    }
 	  //保存到数据库
 	    public void WritetoSql(String sUrL, StringBuffer sb){

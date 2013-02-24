@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_13" class="java.beans.XMLDecoder"> 
+ <object class="java.util.Hashtable"> 
+  <void method="put"> 
+   <string>http://www.facebook.com/BostonUniversity</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://twitter.com/#!/BU_Tweets/bu-on-twitter</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bumc.bu.edu/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/2013/redstone-film-festival-megan-lovallo/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/bostonia/summer12/pilot/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/bostonia/summer12/will/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/2013/fulweilers-message-in-a-bottle/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/buniverse/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/2013/penelopiad-reimagines-the-odyssey-through-the-eyes-of-penelope/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/2013/chill-out-at-winterfest/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/2011/natural-gas-leaks-fuel-global-warming-not-homes/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.goterriers.com/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/bostonia</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+  <void method="put"> 
+   <string>http://www.bu.edu/today/</string> 
+   <object class="java.lang.StringBuffer"/> 
+  </void> 
+ </object> 
+</java> 
