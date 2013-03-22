@@ -238,10 +238,14 @@ public class Crawler {
 	  //±£´æhtmlÎÄ¼þ
 	    public void WriteWeb(String sUrL, StringBuffer sb){
 	    	String url = sUrL;
-	    	String tmp = getBASE64(url);
-	    	String tmp_out = getFromBASE64(tmp);
+	    	//String tmp = getBASE64(url);
+	    	//String tmp_out = getFromBASE64(tmp);
+	    	//String tmp=url.replaceAll(":", "_");
+	    	//String tmp2=url.replaceAll("/", "_");
+	    	String tmp=url.replaceAll("[/:]", "_");
+	    	//String tmp_out= tmp.replaceAll("_", "[/:]");
 	    	System.out.println(tmp);
-	    	System.out.println(tmp_out);
+	    	//System.out.println(tmp_out);
 	    	String path = "C:\\webpage";
 	    	String filepath = path+"\\"+ tmp +".html";
 	    	
