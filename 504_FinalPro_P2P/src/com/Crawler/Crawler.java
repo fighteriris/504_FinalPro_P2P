@@ -138,9 +138,9 @@ public class Crawler {
 	                    //解析网页内容，从中提取链接  
 	                    parseContext(sb.toString(),d+1);  
 	                }
-	                //WriteWeb(sUrl,sb);
+	                WriteWeb(sUrl,sb);
 	                //WritetoSql(sUrl,sb);
-	                WritetoHash(sUrl,sb);
+	                //WritetoHash(sUrl,sb);
 //	              System.out.println(sb.toString());  
 	  
 	              
