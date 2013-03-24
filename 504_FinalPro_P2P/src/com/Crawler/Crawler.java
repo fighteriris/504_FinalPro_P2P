@@ -242,7 +242,7 @@ public class Crawler {
 	    	//String tmp_out = getFromBASE64(tmp);
 	    	//String tmp=url.replaceAll(":", "_");
 	    	//String tmp2=url.replaceAll("/", "_");
-	    	String tmp=url.replaceAll("[/:]", "_");
+	    	String tmp=url.replaceAll("[/:?]", "_");
 	    	//String tmp_out= tmp.replaceAll("_", "[/:]");
 	    	System.out.println(tmp);
 	    	//System.out.println(tmp_out);
