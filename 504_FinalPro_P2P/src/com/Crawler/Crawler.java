@@ -233,7 +233,7 @@ public class Crawler {
 				parseContext(sb.toString(), d + 1);
 			}
 			WriteWeb(sUrl, sb);
-			// WritetoSql(sUrl,sb);
+			 WritetoSql(sUrl,sb);
 			// WritetoHash(sUrl,sb);
 			// System.out.println(sb.toString());
 
@@ -288,9 +288,10 @@ public class Crawler {
 	// 保存到数据库
 	public void WritetoSql(String sUrL, StringBuffer sb) {
 		String myurl = sUrL;
-		if (!sUrL.contains("bu.edu"))
+		String tmp = myurl.replaceAll("[/:?]", "_");
+		if (!tmp.contains("BU")&& !tmp.contains("bu"))
 			return;
-		String data = sb.toString();
+		String data = delHTMLTag(sb.toString().replaceAll("\\t", ""));
 		String driver = "com.mysql.jdbc.Driver";
 		String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
 		String user = "root";
