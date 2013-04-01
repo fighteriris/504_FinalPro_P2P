@@ -1,0 +1,68 @@
+!SESSION 2013-03-22 11:35:17.032 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_13
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -data C:\Users\fighteriris\Documents\GitHub\504_FinalPro_P2P\504_FinalPro_P2P -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.jface 2 0 2013-03-22 11:35:25.412
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2013-03-22 11:35:25.412
+!MESSAGE A conflict occurred for SHIFT+DEL:
+Binding(SHIFT+DEL,
+	ParameterizedCommand(Command(org.eclipse.datatools.sqltools.result.removeAllInstances,Remove All Visible Results,
+		,
+		Category(org.eclipse.datatools.sqltools.result.category,SQL Results View,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(SHIFT+DEL,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.cut,Cut,
+		Cut the selection to the clipboard,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.handlers.WidgetMethodHandler@157677ea,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.dialogAndWindow,,,system)
+Binding(SHIFT+DEL,
+	ParameterizedCommand(Command(org.topcased.modeler.deleteModelObject,Delete From Model,
+		Allows the user to delete the selected graph element and its associated model element in a Topcased editor.,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:29.563
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\html\css_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:29.861
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\html\forms_lists_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:29.919
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\html\htmlform_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:29.953
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\html\html_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:29.985
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\html\javascript_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.037
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\jsf_f_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.088
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\jsf_h_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.128
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\struts_bean_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.201
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\struts_html_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.262
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\struts_logic_snippets.xml
+
+!ENTRY com.genuitec.eclipse.wizards 1 0 2013-03-22 11:35:30.545
+!MESSAGE Installed snippet library: C:\Users\fighteriris\AppData\Local\MyEclipse\MyEclipse 9\configuration\org.eclipse.osgi\bundles\124\1\.cp\snippets\jsp\struts_tiles_snippets.xml
