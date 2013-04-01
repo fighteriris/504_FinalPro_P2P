@@ -422,11 +422,11 @@ public class Crawler {
 		}
 	}
 
-	// Get urls from the context
+	// 从context提取url地址
 	public void parseContext(String context, int dep) {
 		String regex = "<a href.*?/a>";
 		// String regex = "<title>.*?</title>";
-		//String s = "fdfd<title>我 是</title><a href=\"http://www.iteye.com/blogs/tag/Google\">Google</a>fdfd<>";
+		String s = "fdfd<title>我 是</title><a href=\"http://www.iteye.com/blogs/tag/Google\">Google</a>fdfd<>";
 		// String regex ="http://.*?>";
 		Pattern pt = Pattern.compile(regex);
 		Matcher mt = pt.matcher(context);
@@ -434,36 +434,18 @@ public class Crawler {
 			// System.out.println(mt.group());
 			Matcher myurl = Pattern.compile("href=\".*?\"").matcher(mt.group());
 			while (myurl.find()) {
-				String str = myurl.group().replaceAll("href=\"|\"", "");//delete html tag to
+				String str = myurl.group().replaceAll("href=\"|\"", "");
 				// System.out.println("网址是:"+ str);
-				if (str.contains("http:")) { // take out true urls
+				if (str.contains("http:")) { // 取出一些不是url的地址
 					if (!allurlSet.contains(str)) {
-						addUrl(str, dep);// add a new url
-						if (count > 0) { // if there is a thread waiting, wake it
+						addUrl(str, dep);// 加入一个新的url
+						if (count > 0) { // 如果有等待的线程，则唤醒
 							synchronized (signal) { // ---------------------（2）
 								count--;
 								signal.notify();
 							}
 						}
 
-					}
-				}
-				else
-				{
-					if(!str.contains("css"))
-					{
-						if(!str.contains("js"))
-							str="http://bu.edu"+str;
-							if (!allurlSet.contains(str)) {
-								addUrl(str, dep);// add a new url
-								if (count > 0) { // if there is a thread waiting, wake it
-									synchronized (signal) { // ---------------------（2）
-										count--;
-										signal.notify();
-									}
-								}
-
-							}
 					}
 				}
 			}
