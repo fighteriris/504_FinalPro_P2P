@@ -44,7 +44,7 @@ public class Crawler {
 	int count = 0; // 表示有多少个线程处于wait状态
 	public static final Object signal = new Object(); // 线程间通信变量
 	public Hashtable webpage_hash = new Hashtable();
-	static LinkedList<Index> indexlist = new LinkedList<Index>();
+	public static LinkedList<Index> indexlist = new LinkedList<Index>();
 
 	public class Index {
 		Map<String, Integer> treeMap = new TreeMap<String, Integer>();
@@ -145,9 +145,65 @@ public class Crawler {
 		newnode.treeMap = treeMap;
 		newnode.url = sUrL;
 		indexlist.add(newnode);
+		//System.out.println(newnode.url);
+		
+		//WriteTreetoSql(sUrL, treeMap);
 		return htmlStr;
 	}
 
+	public void WriteTreetoSql(String sUrL, Map treeMap)
+	{
+		
+		String myurl = sUrL;
+		String tmp = myurl.replaceAll("[/:?]", "_");
+		if (!tmp.contains("BU")&& !tmp.contains("bu"))
+			return;
+		String data = null;
+		
+		Set entrySet = treeMap.entrySet();
+		
+		Iterator iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			data = iterator.next().toString();
+		
+		
+		String driver = "com.mysql.jdbc.Driver";
+		String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
+		String user = "root";
+		String password = "000000";
+		try {
+			// 加载驱动程序
+			Class.forName(driver);
+			// Connect the DB
+			Connection conn = DriverManager.getConnection(sqlurl, user,password);
+			//if (!conn.isClosed())
+				//System.out.println("Succeeded connecting to the Database!WITH PAGE INDEXLIST");
+			// statement用来执行SQL语句
+			Statement statement = conn.createStatement();
+			// 要执行的SQL语句
+			
+			String sql = "insert into indexlist(URL, Wordtree) values(?,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, tmp);
+			ps.setString(2, data);
+			int result = ps.executeUpdate();
+			if (result < 0)
+				
+				System.out.println("Unable to update the database");
+			conn.close();
+			// ps.setString(4, user.getEmail());
+		} catch (ClassNotFoundException e) {
+			System.out.println("Sorry,can`t find the Driver!");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
+	}
+	
 	private void begin() {
 		for (int i = 0; i < threadCount; i++) {
 			new Thread(new Runnable() {
@@ -167,7 +223,7 @@ public class Crawler {
 							synchronized (signal) { // ------------------（2）
 								try {
 									count++;
-									System.out.println("当前有" + count + "个线程在等待");
+									System.out.println("There are" + count + "threads are waiting");
 									signal.wait();
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block

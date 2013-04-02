@@ -1,9 +1,10 @@
-#Sun Mar 31 21:25:12 EDT 2013
+#Tue Apr 02 00:46:32 EDT 2013
 org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
 org.eclipse.jdt.core.compiler.compliance=1.6
 org.eclipse.jdt.core.classpathVariable.JRE_LIB=C\:/Users/fighteriris/AppData/Local/MyEclipse Bling Edition/Common/binary/com.sun.java.jdk.win32.x86_64_1.6.0.013/jre/lib/rt.jar
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
 org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.classpathVariable.MYECLIPSE_LIB_HOME=C\:/Users/fighteriris/AppData/Local/MyEclipse Bling Edition/Common/plugins/com.genuitec.eclipse.j2eedt.core_9.0.0.me201106292137/data/libraryset
 org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled

@@ -1,0 +1,14 @@
+#Tue Apr 02 00:49:14 EDT 2013
+myeclipseTomcatServer.searchtest.shouldOverwrite=false
+myeclipseTomcatServer.searchtest.IEARProjectName=
+myeclipseTomcatServer.searchtest.isDeployed=true
+myeclipseTomcatServer.searchtest.noFileCopy=false
+myeclipseTomcatServer.searchtest.shouldBackup=false
+myeclipseTomcatServer.searchtest.type=WebDeployment
+myeclipseTomcatServer.searchtest.altContextRoot=/searchtest
+myeclipseTomcatServer.searchtest.contextRoot=/searchtest
+eclipse.preferences.version=1
+myeclipseTomcatServer.searchtest.isUptoDate=true
+myeclipseTomcatServer.searchtest.deploymentPath=C\:\\Users\\fighteriris\\Documents\\GitHub\\504_FinalPro_P2P\\.metadata\\.me_tcat\\webapps\\searchtest
+myeclipseTomcatServer.searchtest.deployIsOverProject=false
+myeclipseTomcatServer.searchtest.isExploded=true
