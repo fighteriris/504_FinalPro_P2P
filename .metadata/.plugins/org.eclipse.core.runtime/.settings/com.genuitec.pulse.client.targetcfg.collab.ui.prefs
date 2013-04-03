@@ -1,3 +1,4 @@
-#Sun Mar 31 21:24:35 EDT 2013
+#Tue Apr 02 23:14:34 EDT 2013
 eclipse.preferences.version=1
 com.genuitec.pulse.targetcfg.notify.dashboard.subsequent.launch=true
+com.genuitec.pulse.targetcfg.notify.dashboard.skip=true
