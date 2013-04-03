@@ -36,15 +36,16 @@ public class Crawler {
 	 * @param args
 	 */
 	// public class WebCrawler {
-	ArrayList<String> allurlSet = new ArrayList<String>();// 所有的网页url，需要更高效的去重可以考虑HashSet
-	ArrayList<String> notCrawlurlSet = new ArrayList<String>();// 未爬过的网页url
-	HashMap<String, Integer> depth = new HashMap<String, Integer>();// 所有网页的url深度
-	int crawDepth = 2; // 爬虫深度
-	int threadCount = 10; // 线程数量
-	int count = 0; // 表示有多少个线程处于wait状态
-	public static final Object signal = new Object(); // 线程间通信变量
+	ArrayList<String> allurlSet = new ArrayList<String>();// All the urls we get, when crawling new websites, it is growing    所有的网页url，需要更高效的去重可以考虑HashSet
+	ArrayList<String> notCrawlurlSet = new ArrayList<String>();// The urls that have not been crawled            未爬过的网页url
+	HashMap<String, Integer> depth = new HashMap<String, Integer>();// Depth for all the urls                  所有网页的url深度
+	int crawDepth = 2; // Depth for the crawler    爬虫深度
+	int threadCount = 10; // Number of 线程数量
+	int count = 0; // Indicate how many threads are waiting 表示有多少个线程处于wait状态
+	public static final Object signal = new Object(); // for communication in threads   线程间通信变量
 	public Hashtable webpage_hash = new Hashtable();
-	public static LinkedList<Index> indexlist = new LinkedList<Index>();
+	
+	public static LinkedList<Index> indexlist = new LinkedList<Index>();// for all the Index Information
 
 	public class Index {
 		Map<String, Integer> treeMap = new TreeMap<String, Integer>();
@@ -110,7 +111,7 @@ public class Crawler {
 		Matcher m_html = p_html.matcher(htmlStr);
 		htmlStr = m_html.replaceAll(""); // 过滤html标签
 
-		htmlStr.replaceAll("\\s", ""); // 过滤space
+		htmlStr.replaceAll("\\s\\t", ""); // 过滤space
 
 		return htmlStr.trim(); // 返回过滤后的string
 	}
@@ -391,13 +392,11 @@ public class Crawler {
 		}
 	}
 
-	// 保存html文件
+	// Save as Html file   保存html文件
 	public void WriteWeb(String sUrL, StringBuffer sb) {
 		String url = sUrL;
 		// String tmp = getBASE64(url);
 		// String tmp_out = getFromBASE64(tmp);
-		// String tmp=url.replaceAll(":", "_");
-		// String tmp2=url.replaceAll("/", "_");
 		String tmp = url.replaceAll("[/:?]", "_");
 		// String tmp_out= tmp.replaceAll("_", "[/:]");
 		System.out.println(tmp);
@@ -409,10 +408,9 @@ public class Crawler {
 		try {
 			File f = new File(filepath);
 			BufferedWriter output = new BufferedWriter(new FileWriter(f));
-			String content = delHTMLTag(sb.toString().replaceAll("\\t", ""));
+			String content = delHTMLTag(sb.toString());
 			output.write(content);
 			frecount(sUrL, content);
-
 			output.close();
 			// output.write(sb);
 			// output.writeFromBuffer();
@@ -426,7 +424,6 @@ public class Crawler {
 	public void parseContext(String context, int dep) {
 		String regex = "<a href.*?/a>";
 		// String regex = "<title>.*?</title>";
-		String s = "fdfd<title>我 是</title><a href=\"http://www.iteye.com/blogs/tag/Google\">Google</a>fdfd<>";
 		// String regex ="http://.*?>";
 		Pattern pt = Pattern.compile(regex);
 		Matcher mt = pt.matcher(context);
