@@ -41,14 +41,14 @@ public class Crawler {
 	HashMap<String, Integer> depth = new HashMap<String, Integer>();// Depth for all the urls                  所有网页的url深度
 	int crawDepth = 2; // Depth for the crawler    爬虫深度
 	int threadCount = 10; // Number of 线程数量
-	int count = 0; // Indicate how many threads are waiting 表示有多少个线程处于wait状态
+	int waitCount = 0; // Indicate how many threads are waiting 表示有多少个线程处于wait状态
 	public static final Object signal = new Object(); // for communication in threads   线程间通信变量
 	public Hashtable webpage_hash = new Hashtable();
 	
 	public static LinkedList<Index> indexlist = new LinkedList<Index>();// for all the Index Information
 
 	public class Index {
-		Map<String, Integer> treeMap = new TreeMap<String, Integer>();
+		Map<String, Integer> indexMap = new TreeMap<String, Integer>();
 		String url;
 	}
 
@@ -62,7 +62,7 @@ public class Crawler {
 
 		while (true) {
 			if (wc.notCrawlurlSet.isEmpty() && Thread.activeCount() == 1
-					|| wc.count == wc.threadCount) {
+					|| wc.waitCount == wc.threadCount) {
 				long end = System.currentTimeMillis();
 				System.out.println("Crawlled " + wc.allurlSet.size()
 						+ " websites in total!");
@@ -75,7 +75,7 @@ public class Crawler {
 						+ " elements in total.");
 				System.out.println(indexlist.getLast().url
 						+ "has such an index:");
-				Set entrySet = indexlist.getLast().treeMap.entrySet();
+				Set entrySet = indexlist.getLast().indexMap.entrySet();
 
 				Iterator iterator = entrySet.iterator();
 
@@ -143,7 +143,7 @@ public class Crawler {
 
 		// create the Indexnode and add it into the indexlist
 		Index newnode = new Index();
-		newnode.treeMap = treeMap;
+		newnode.indexMap = treeMap;
 		newnode.url = sUrL;
 		indexlist.add(newnode);
 		//System.out.println(newnode.url);
@@ -223,8 +223,8 @@ public class Crawler {
 						} else {
 							synchronized (signal) { // ------------------（2）
 								try {
-									count++;
-									System.out.println("There are" + count + "threads are waiting");
+									waitCount++;
+									System.out.println("There are" + waitCount + "threads are waiting");
 									signal.wait();
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
@@ -432,17 +432,32 @@ public class Crawler {
 			Matcher myurl = Pattern.compile("href=\".*?\"").matcher(mt.group());
 			while (myurl.find()) {
 				String str = myurl.group().replaceAll("href=\"|\"", "");
-				// System.out.println("网址是:"+ str);
-				if (str.contains("http:")) { // 取出一些不是url的地址
+				// System.out.println("The Url is :"+ str);
+				if (str.contains("http:")) { // take out some urls who are not useful
 					if (!allurlSet.contains(str)) {
-						addUrl(str, dep);// 加入一个新的url
-						if (count > 0) { // 如果有等待的线程，则唤醒
+						addUrl(str, dep);// Add a new url
+						if (waitCount > 0) { // If there is a thread waiting, wake it 
 							synchronized (signal) { // ---------------------（2）
-								count--;
+								waitCount--;
 								signal.notify();
 							}
 						}
-
+					}
+				}
+				else if(!str.contains(".css"))
+				{
+					if(!str.contains(".js"))
+					{
+						str="http://bu.edu/"+str;  // add the right form of url
+						if (!allurlSet.contains(str)) {
+							addUrl(str, dep);//  Add a new url
+							if (waitCount > 0) { // If there is a thread waiting, wake it 
+								synchronized (signal) { // ---------------------（2）
+									waitCount--;
+									signal.notify();
+								}
+							}
+						}
 					}
 				}
 			}
