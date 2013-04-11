@@ -1,4 +1,4 @@
-#Thu Apr 11 14:38:24 EDT 2013
+#Thu Apr 11 14:58:05 EDT 2013
 sp_cleanup.add_missing_override_annotations=true
 content_assist_proposals_foreground=0,0,0
 content_assist_proposals_background=255,255,255
@@ -47,7 +47,7 @@ sp_cleanup.use_this_for_non_static_field_access=false
 tabWidthPropagated=true
 sp_cleanup.never_use_blocks=false
 sp_cleanup.use_blocks_only_for_return_and_throw=false
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"/>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="javax.swing.AbstractListModel"><rhs name\="javax.swing.DefaultListModel"/></lhs><lhs name\="javax.swing.ListModel"><rhs name\="javax.swing.DefaultListModel"/></lhs><lhs name\="javax.swing.DefaultListModel"><rhs name\="javax.swing.DefaultListModel"/></lhs></history>
 sp_cleanup.remove_unused_private_types=true
 sp_cleanup.sort_members_all=false
 sp_cleanup.add_missing_nls_tags=false
