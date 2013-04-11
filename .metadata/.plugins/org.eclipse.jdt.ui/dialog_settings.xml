@@ -11,6 +11,9 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
+	<section name="BuildPathsPropertyPage">
+		<item value="2" key="pageIndex"/>
+	</section>
 	<section name="NewJspCreationWizardPage">
 		<item value="Standard JSP using Struts 1.2/1.3 with a form" key="templatezh_CN"/>
 		<item value="/searchtest/src" key="filePath"/>
