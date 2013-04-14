@@ -101,29 +101,28 @@ public class Crawler {
 
 	public String delHTMLTag(String htmlStr) // function to delete the HTML tags
 	{
-		String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式
-		String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式
-		String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
-		// String regEx_space="[/^\s*$/]";//define the regular expression for
-		// space
+		String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // define the regex for script
+		String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // define the regex for style
+		String regEx_html = "<[^>]+>"; // define the regex for HTML
+		// String regEx_space="[/^\s*$/]";//define the regular expression for space
 
 		Pattern p_script = Pattern.compile(regEx_script,
 				Pattern.CASE_INSENSITIVE);
 		Matcher m_script = p_script.matcher(htmlStr);
-		htmlStr = m_script.replaceAll(""); // 过滤script标签
+		htmlStr = m_script.replaceAll(""); // delete script tags
 
 		Pattern p_style = Pattern
 				.compile(regEx_style, Pattern.CASE_INSENSITIVE);
 		Matcher m_style = p_style.matcher(htmlStr);
-		htmlStr = m_style.replaceAll(""); // 过滤style标签
+		htmlStr = m_style.replaceAll(""); // delete style tags
 
 		Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
 		Matcher m_html = p_html.matcher(htmlStr);
-		htmlStr = m_html.replaceAll(""); // 过滤html标签
+		htmlStr = m_html.replaceAll(""); // delete html tags
 
-		htmlStr=htmlStr.replaceAll("\\W", " "); // 过滤制表符
+		htmlStr=htmlStr.replaceAll("\\W", " "); // delete all the symbols which are not character
 
-		return htmlStr.trim(); // 返回过滤后的string
+		return htmlStr.trim(); // return pure context string
 	}
 
 	public String frecount(String sUrL, String htmlStr) // function to count
@@ -134,7 +133,7 @@ public class Crawler {
 		hashMap = new HashMap<String, Integer>();
 
 		// Take substrings as words in the htmlStr，Separator Symbols defined as "," "." "!" " "
-		htmlStr=htmlStr.replaceAll("\\W", "");
+		htmlStr=htmlStr.replaceAll("\\W", " ");
 		st = new StringTokenizer(htmlStr, " ,;/:.!?-$[]{}()&\\s*\t\r\n");
 
 		while (st.hasMoreTokens()) {
@@ -301,8 +300,9 @@ public class Crawler {
 				// parse context to grab content from it b解析网页内容，从中提取链接
 				parseContext(sb.toString(), d + 1);
 			}
-			WriteWeb(sUrl, sb);
-			 WritetoSql(sUrl,sb);
+			 //delHTMLTag(sb.toString());
+			WriteWeb(sUrl, sb); //write to file
+			 WritetoSql(sUrl,sb);//write content to sql
 			// WritetoHash(sUrl,sb);
 
 		} catch (IOException e) {
@@ -359,8 +359,7 @@ public class Crawler {
 		String tmp = myurl.replaceAll("[/:?]", "_");
 		if (!tmp.contains("BU")&& !tmp.contains("bu"))
 			return;
-		String data = delHTMLTag(sb.toString().replaceAll("\\t", ""));
-		
+		String data = delHTMLTag(sb.toString().replaceAll("\\t", ""));	
 		String driver = "com.mysql.jdbc.Driver";
 		String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
 		String user = "root";
@@ -393,7 +392,6 @@ public class Crawler {
 				System.out.println("Update");
 			else
 				System.out.println("Unable to update the database");
-			// ps.setString(4, user.getEmail());
 		} catch (ClassNotFoundException e) {
 			System.out.println("Sorry,can`t find the Driver!");
 			e.printStackTrace();
