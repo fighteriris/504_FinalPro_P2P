@@ -30,6 +30,8 @@ import sun.misc.BASE64Encoder;
 import sun.misc.BASE64Decoder;
 import java.sql.*;
 
+import javax.xml.stream.events.StartDocument;
+
 public class Crawler {
 
 	/**
@@ -39,8 +41,8 @@ public class Crawler {
 	ArrayList<String> allurlSet = new ArrayList<String>();// All the urls we get, when crawling new websites, it is growing    所有的网页url，需要更高效的去重可以考虑HashSet
 	ArrayList<String> notCrawlurlSet = new ArrayList<String>();// The urls that have not been crawled            未爬过的网页url
 	HashMap<String, Integer> depth = new HashMap<String, Integer>();// Depth for all the urls                  所有网页的url深度
-	int crawDepth = 2; // Depth for the crawler    爬虫深度
-	int threadCount = 10; // Number of 线程数量
+	int crawDepth = 1; // Depth for the crawler    爬虫深度
+	int threadCount = 10; // Number of threads 线程数量
 	int waitCount = 0; // Indicate how many threads are waiting 表示有多少个线程处于wait状态
 	public static final Object signal = new Object(); // for communication in threads   线程间通信变量
 	public Hashtable webpage_hash = new Hashtable();
@@ -53,11 +55,20 @@ public class Crawler {
 	}
 
 	public static void main(String[] args) {
+		(new Thread(){
+			public void run(){
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						new test().setVisible(true);
+						}
+		});
+			}
+		}).start();
 		final Crawler wc = new Crawler(); // implement a Crawler object
 		wc.addUrl("http://www.bu.edu", 1); // add BU url as task
 		long start = System.currentTimeMillis(); // record current time
 		System.out
-				.println("Crawler begins............................................");
+				.println("Crawler begins............................................\n");
 		wc.begin();
 
 		while (true) {
@@ -71,9 +82,8 @@ public class Crawler {
 				wc.SaveHash();
 
 				// test
-				System.out.println("Our indexlist has " + indexlist.size()
-						+ " elements in total.");
-				System.out.println(indexlist.getLast().url
+				System.out.println("Our indexlist has " + indexlist.size()+ " elements in total.");
+				/*System.out.println(indexlist.getLast().url
 						+ "has such an index:");
 				Set entrySet = indexlist.getLast().indexMap.entrySet();
 
@@ -81,7 +91,7 @@ public class Crawler {
 
 				while (iterator.hasNext()) {
 					System.out.println(iterator.next());
-				}
+				}*/
 
 				System.exit(1);
 				// break;
@@ -111,7 +121,7 @@ public class Crawler {
 		Matcher m_html = p_html.matcher(htmlStr);
 		htmlStr = m_html.replaceAll(""); // 过滤html标签
 
-		htmlStr.replaceAll("\\s\\t", ""); // 过滤space
+		htmlStr=htmlStr.replaceAll("\\W", " "); // 过滤制表符
 
 		return htmlStr.trim(); // 返回过滤后的string
 	}
@@ -124,7 +134,8 @@ public class Crawler {
 		hashMap = new HashMap<String, Integer>();
 
 		// Take substrings as words in the htmlStr，Separator Symbols defined as "," "." "!" " "
-		st = new StringTokenizer(htmlStr, " ,;/:.!?-$[]{}()&\r\n");
+		htmlStr=htmlStr.replaceAll("\\W", "");
+		st = new StringTokenizer(htmlStr, " ,;/:.!?-$[]{}()&\\s*\t\r\n");
 
 		while (st.hasMoreTokens()) {
 			String key = st.nextToken();
@@ -146,28 +157,28 @@ public class Crawler {
 		newnode.indexMap = treeMap;
 		newnode.url = sUrL;
 		indexlist.add(newnode);
-		//System.out.println(newnode.url);
 		
-		//WriteTreetoSql(sUrL, treeMap);
+		WriteTreetoSql(sUrL, treeMap);
 		return htmlStr;
 	}
 
-	public void WriteTreetoSql(String sUrL, Map treeMap)
+	public void WriteTreetoSql(String sUrL, Map<String, Integer> treeMap)
 	{
 		
 		String myurl = sUrL;
 		String tmp = myurl.replaceAll("[/:?]", "_");
 		if (!tmp.contains("BU")&& !tmp.contains("bu"))
 			return;
-		String data = null;
 		
 		Set entrySet = treeMap.entrySet();
 		
 		Iterator iterator = entrySet.iterator();
 
 		while (iterator.hasNext()) {
-			data = iterator.next().toString();
-		
+			String[] data = iterator.next().toString().split("\\=");
+		String word=data[0];
+		String fre=data[1];
+        System.out.println(data[0]+" , "+data[1]); 
 		
 		String driver = "com.mysql.jdbc.Driver";
 		String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
@@ -184,10 +195,11 @@ public class Crawler {
 			Statement statement = conn.createStatement();
 			// 要执行的SQL语句
 			
-			String sql = "insert into indexlist(URL, Wordtree) values(?,?)";
+			String sql = "insert into indexlist(URL, Wordtree,Frequency) values(?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, tmp);
-			ps.setString(2, data);
+			ps.setString(2, word);
+			ps.setString(3, fre);
 			int result = ps.executeUpdate();
 			if (result < 0)
 				
@@ -224,7 +236,7 @@ public class Crawler {
 							synchronized (signal) { // ------------------（2）
 								try {
 									waitCount++;
-									System.out.println("There are" + waitCount + "threads are waiting");
+									System.out.println("There are " + waitCount + " threads waiting");
 									signal.wait();
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
@@ -271,6 +283,7 @@ public class Crawler {
 			URLConnection urlconnection = url.openConnection();
 			urlconnection.addRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			
 			InputStream is = url.openStream();
 			BufferedReader bReader = new BufferedReader(new InputStreamReader(
 					is));
@@ -283,16 +296,15 @@ public class Crawler {
 			}
 
 			int d = depth.get(sUrl);
-			System.out.println("爬网页" + sUrl + "成功，深度为" + d + " 是由线程"
-					+ Thread.currentThread().getName() + "来爬");
+			System.out.println("Crawl page " + sUrl + "successfully, depth is " + d + " with thread "
+					+ Thread.currentThread().getName()+"\n");
 			if (d < crawDepth) {
-				// 解析网页内容，从中提取链接
+				// parse context to grab content from it b解析网页内容，从中提取链接
 				parseContext(sb.toString(), d + 1);
 			}
 			WriteWeb(sUrl, sb);
 			 WritetoSql(sUrl,sb);
 			// WritetoHash(sUrl,sb);
-			// System.out.println(sb.toString());
 
 		} catch (IOException e) {
 			// crawlurlSet.add(sUrl);
@@ -322,7 +334,7 @@ public class Crawler {
 
 	// 保存到hashtable
 	public void WritetoHash(String sUrl, StringBuffer sb) {
-		String str;
+		//String str;
 		webpage_hash.put(sUrl, sb);
 
 	}
@@ -349,6 +361,7 @@ public class Crawler {
 		if (!tmp.contains("BU")&& !tmp.contains("bu"))
 			return;
 		String data = delHTMLTag(sb.toString().replaceAll("\\t", ""));
+		
 		String driver = "com.mysql.jdbc.Driver";
 		String sqlurl = "jdbc:mysql://127.0.0.1:3306/p2psearch_webpage_test";
 		String user = "root";
@@ -433,7 +446,7 @@ public class Crawler {
 			while (myurl.find()) {
 				String str = myurl.group().replaceAll("href=\"|\"", "");
 				// System.out.println("The Url is :"+ str);
-				if (str.contains("http:")) { // take out some urls who are not useful
+				if (str.contains("http:") && (str.contains("BU")||str.contains("bu"))) { // take out some urls who are not useful
 					if (!allurlSet.contains(str)) {
 						addUrl(str, dep);// Add a new url
 						if (waitCount > 0) { // If there is a thread waiting, wake it 
