@@ -1,4 +1,5 @@
 package com.Crawler;
+
 import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -263,7 +264,7 @@ public class test extends javax.swing.JFrame {
 			// statement用来执行SQL语句
 			Statement statement = conn.createStatement();
 			// 要执行的SQL语句
-			String sql = "Select * from indexlist where Wordtree ="+textField1.getText();
+			String sql = "Select * from indexlist where Wordtree ="+ "'"+textField1.getText()+"'";
 			ResultSet rs = statement.executeQuery(sql);
 			int i = 0;
 			DefaultListModel mylistmodel = new DefaultListModel();
@@ -301,13 +302,13 @@ public class test extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	/*public static void main(String args[]) {
+	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new test().setVisible(true);
 			}
 		});
-	}*/
+	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify

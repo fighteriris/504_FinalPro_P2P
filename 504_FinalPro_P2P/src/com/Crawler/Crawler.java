@@ -93,7 +93,7 @@ public class Crawler {
 					System.out.println(iterator.next());
 				}*/
 
-				System.exit(1);
+				//System.exit(1);
 				// break;
 			}
 		}
