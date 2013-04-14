@@ -242,8 +242,35 @@ public class test extends javax.swing.JFrame {
 		String password = "000000";
 		String url = null;
 		url = jList1.getSelectedValue().toString();
+		String content = null;
+		try {
+			// 加载驱动程序
+			Class.forName(driver);
+			// Connect the DB
+			Connection conn = DriverManager.getConnection(sqlurl, user,
+					password);
+			//if (!conn.isClosed())
+			//System.out.println("Succeeded connecting to the Database!WITH PAGE INDEXLIST");
+			// statement用来执行SQL语句
+			Statement statement = conn.createStatement();
+			// 要执行的SQL语句
+			String sql = "Select * from webpage where PAGE_URL ="+ "'"+url+"'";
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				content = rs.getString(2);// + rs.getString(2)+ rs.getString(3);
+				System.out.println(rs.getString(1) + " , "+rs.getString(2));
+			conn.close();
+			}
+		} catch (ClassNotFoundException e) {
+			System.out.println("Sorry,can`t find the Driver!");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println(url);
-		jTextArea1.setText(url);
+		jTextArea1.setText(content);
 	}
 
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,8 +296,8 @@ public class test extends javax.swing.JFrame {
 			int i = 0;
 			DefaultListModel mylistmodel = new DefaultListModel();
 			while (rs.next()) {
-				String tmp = rs.getString(1) + rs.getString(2)
-						+ rs.getString(3);
+				String tmp = rs.getString(1);// + rs.getString(2)+ rs.getString(3);
+				System.out.println(rs.getString(1) + " , "+rs.getString(2)+ " , "+rs.getString(3));
 				mylistmodel.add(i, tmp);
 				i++;
 			}

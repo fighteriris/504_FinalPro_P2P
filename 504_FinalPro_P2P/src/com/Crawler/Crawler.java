@@ -164,7 +164,6 @@ public class Crawler {
 
 	public void WriteTreetoSql(String sUrL, Map<String, Integer> treeMap)
 	{
-		
 		String myurl = sUrL;
 		String tmp = myurl.replaceAll("[/:?]", "_");
 		if (!tmp.contains("BU")&& !tmp.contains("bu"))
@@ -197,7 +196,7 @@ public class Crawler {
 			
 			String sql = "insert into indexlist(URL, Wordtree,Frequency) values(?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, tmp);
+			ps.setString(1, myurl);
 			ps.setString(2, word);
 			ps.setString(3, fre);
 			int result = ps.executeUpdate();
